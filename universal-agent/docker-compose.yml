@@ -1,0 +1,114 @@
+#docker-compose --profile with-redis up --build
+
+version: '3.8'
+
+services:
+  universal-agent:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: universal-agent
+    restart: unless-stopped
+    # Add restart limit to prevent infinite loops
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+    
+    # Device access (will be configured by detection script)
+    privileged: false  # Will be set by detection script
+    user: root  # Run as root for development to avoid permission issues
+    
+    # Port mapping
+    ports:
+      - "5000:5000"
+    
+    # Volume mounts (will be configured by detection script)
+    volumes:
+      # Persistent data storage
+      - ./data:/app/data
+      # Device access (conditional - will be mounted by detection script)
+      # - /dev:/dev
+      # - /sys:/sys:ro
+      # - /proc:/proc:ro
+    
+    # Environment variables
+    environment:
+      - FLASK_ENV=production
+      - DEBUG=false
+      - HOST=0.0.0.0
+      - PORT=5000
+      - AUTO_DETECT_HARDWARE=true
+      
+      # API Configuration
+      - MINDGARDEN_API_BASE=${MINDGARDEN_API_BASE:-https://api.example.com}
+      - MINDGARDEN_AUTH_BASE=${MINDGARDEN_AUTH_BASE:-https://auth.example.com}
+      
+      # Auth0 Configuration (set these in .env file)
+      - AUTH0_DOMAIN=${AUTH0_DOMAIN}
+      - AUTH0_CLIENT_ID=${AUTH0_CLIENT_ID}
+      - AUTH0_CLIENT_SECRET=${AUTH0_CLIENT_SECRET}
+      - AUTH0_AUDIENCE=${AUTH0_AUDIENCE}
+      
+      # Cloudflare Tunnel Configuration (set in .env file)
+      - CLOUDFLARE_TUNNEL_TOKEN=${CLOUDFLARE_TUNNEL_TOKEN}
+      
+      # Optional settings
+      - WAIT_FOR_NETWORK=true
+    
+    # Environment file
+    env_file:
+      - .env
+    
+    # Device access groups (will be configured by detection script)
+    # group_add:
+    #   - dialout
+    #   - bluetooth
+    #   - spi
+    #   - gpio
+    #   - i2c
+    
+    # Health check
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    
+    # Logging
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    
+    # Network
+    networks:
+      - app-network
+
+  # Optional: Redis for caching/session storage
+  redis:
+    image: redis:7-alpine
+    container_name: app-redis
+    restart: unless-stopped
+    
+    volumes:
+      - redis-data:/data
+    
+    networks:
+      - app-network
+    
+    # Only start if needed
+    profiles:
+      - with-redis
+
+volumes:
+  redis-data:
+    driver: local
+
+networks:
+  app-network:
+    driver: bridge

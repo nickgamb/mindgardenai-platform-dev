@@ -1,0 +1,259 @@
+# MGFlow Assistant Platform .gitignore
+
+# OS Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# IDE & Editor Files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.settings/
+.classpath
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+.python-version
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+.pnpm-debug.log*
+report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+pids
+*.pid
+*.seed
+*.pid.lock
+.grunt
+bower_components
+.lock-wscript
+build/Release
+.nyc_output
+.eslintcache
+.stylelintcache
+.rpt2_cache/
+.rts2_cache_cjs/
+.rts2_cache_es/
+.rts2_cache_umd/
+.node_repl_history
+*.tgz
+.yarn-integrity
+.npm
+.next
+out/
+.nuxt
+dist
+.cache/
+.parcel-cache
+.vuepress/dist
+.temp
+.cache
+.docusaurus
+.serverless/
+.fusebox/
+.dynamodb/
+.tern-port
+.vscode-test
+.yarn/cache
+.yarn/unplugged
+.yarn/build-state.yml
+.yarn/install-state.gz
+.pnp.*
+
+# Environment Variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env.development
+.env.production
+.env.test
+
+# Docker
+.dockerignore
+docker-compose.override.yml
+
+# Database Files
+*.db
+*.sqlite
+*.sqlite3
+mindgarden.db
+data/uploads/*
+!data/uploads/.gitkeep
+
+# Logs
+logs/
+*.log
+log.txt
+
+# AI Core Data
+ai-core/data/cache/
+ai-core/data/docs/
+ai-core/data/models/
+ai-core/data/vector_db/
+ai-core/open_webui/data/
+
+# Server Data
+server/data/uploads/*
+!server/data/uploads/.gitkeep
+
+# Temporary Files
+tmp/
+temp/
+.tmp/
+.temp/
+
+# Package Files
+*.tar.gz
+*.zip
+*.rar
+*.7z
+
+# Certificate Files
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx
+
+# Secrets & Keys
+*secret*
+*key*
+*password*
+*token*
+*api_key*
+*client_secret*
+*private*
+auth0_*.json
+veza_*.json
+
+# Redis
+dump.rdb
+
+# Screenshots & Media
+screenshots/
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.svg
+!public/assets/
+!web-client/public/
+!static/
+
+# Backup Files
+*.bak
+*.backup
+*.old
+
+# Development Scripts
+test_*.py
+debug_*.py
+local_*.py
+dev_*.js
+test_*.js
+
+# Coverage Reports
+htmlcov/
+.coverage
+.coverage.*
+coverage.xml
+*.cover
+.hypothesis/
+.pytest_cache/
+
+# Documentation Build
+docs/_build/
+site/
+
+# JetBrains
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Windows
+*.exe
+*.msi
+
+# MacOS
+.AppleDouble
+.LSOverride
+
+# Linux
+*~
+
+# Runtime
+.runtime/
+runtime/
+
+# Jupyter
+.ipynb_checkpoints
+
+# pyenv
+.python-version
+
+# Terraform
+*.tfstate
+*.tfstate.*
+.terraform/
+
+# Local development overrides
+docker-compose.dev.local.yml
+docker-compose.local.yml
+
+# Cursor files
+.cursor/
+
+# Misc
+Executive_Pitch.md
+ngamb-lab.txt
+
+ollama-models/*
+
+docker-compose.dev.yml
+currently_in_prod/*
+
+IntegrationsRoadmap.txt

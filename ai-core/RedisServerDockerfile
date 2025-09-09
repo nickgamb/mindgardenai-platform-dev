@@ -1,0 +1,35 @@
+#   docker build -f RedisServerDockerfile -t alden/redis:latest .
+#   docker network create alden
+#   docker run -d --name redis --network alden -p 6379:6379 alden/redis:latest
+
+#   or
+
+#   docker run -d --name redis --network alden -p 6379:6379 \
+#   -v redis-data:/data \
+#   alden/redis:latest
+
+#   or
+
+#   docker run -d --name redis --network alden -p 6379:6379 \
+#   -v /path/on/host/redis-data:/data \
+#   alden/redis:latest
+
+#   docker logs -f redis
+#   docker exec -it redis redis-cli
+
+# Redis Server Dockerfile
+FROM redis:7-alpine
+
+# Create data directory
+RUN mkdir -p /data
+
+# Copy startup script
+COPY redis_start.sh /redis_start.sh
+RUN chmod +x /redis_start.sh
+
+# Copy Redis configuration
+COPY redis.conf /usr/local/etc/redis/redis.conf
+
+EXPOSE 6379
+
+ENTRYPOINT ["/bin/sh", "/redis_start.sh"] 

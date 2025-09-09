@@ -1,0 +1,107 @@
+{
+  "storage_name": "ad_transformed",
+  "timestamp": 1756150451,
+  "data": [
+    {
+      "Department": "Engineering",
+      "DisplayName": "John Smith",
+      "DistinguishedName": "CN=John Smith,OU=Engineering,OU=Users,DC=company,DC=com"
+    },
+    {
+      "Department": "Marketing",
+      "DisplayName": "Maria Johnson",
+      "DistinguishedName": "CN=Maria Johnson,OU=Marketing,OU=Users,DC=company,DC=com"
+    },
+    {
+      "Department": "Sales",
+      "DisplayName": "Robert Brown",
+      "DistinguishedName": "CN=Robert Brown,OU=Sales,OU=Users,DC=company,DC=com"
+    },
+    {
+      "Department": "Engineering",
+      "DisplayName": "Alice Lee",
+      "DistinguishedName": "CN=Alice Lee,OU=Engineering,OU=Users,DC=company,DC=com"
+    },
+    {
+      "Department": "Operations",
+      "DisplayName": "David Garcia",
+      "DistinguishedName": "CN=David Garcia,OU=Operations,OU=Users,DC=company,DC=com"
+    },
+    {
+      "Department": "HR",
+      "DisplayName": "Karen Williams",
+      "DistinguishedName": "CN=Karen Williams,OU=HR,OU=Users,DC=company,DC=com"
+    },
+    {
+      "Department": "Engineering",
+      "DisplayName": "Michael Wilson",
+      "DistinguishedName": "CN=Michael Wilson,OU=Engineering,OU=Users,DC=company,DC=com"
+    },
+    {
+      "Department": "Finance",
+      "DisplayName": "Sarah Davis",
+      "DistinguishedName": "CN=Sarah Davis,OU=Finance,OU=Users,DC=company,DC=com"
+    },
+    {
+      "Department": "Operations",
+      "DisplayName": "James Davis",
+      "DistinguishedName": "CN=James Davis,OU=Operations,OU=Users,DC=company,DC=com"
+    },
+    {
+      "Department": "Engineering",
+      "DisplayName": "Lisa Chen",
+      "DistinguishedName": "CN=Lisa Chen,OU=Engineering,OU=Users,DC=company,DC=com"
+    },
+    {
+      "Department": "Finance",
+      "DisplayName": "Paul Miller",
+      "DistinguishedName": "CN=Paul Miller,OU=Finance,OU=Users,DC=company,DC=com"
+    },
+    {
+      "Department": "HR",
+      "DisplayName": "Susan Thompson",
+      "DistinguishedName": "CN=Susan Thompson,OU=HR,OU=Users,DC=company,DC=com"
+    },
+    {
+      "Department": "Marketing",
+      "DisplayName": "Thomas White",
+      "DistinguishedName": "CN=Thomas White,OU=Marketing,OU=Users,DC=company,DC=com"
+    },
+    {
+      "Department": "Sales",
+      "DisplayName": "Nancy Martinez",
+      "DistinguishedName": "CN=Nancy Martinez,OU=Sales,OU=Users,DC=company,DC=com"
+    },
+    {
+      "Department": "Engineering",
+      "DisplayName": "Kevin Anderson",
+      "DistinguishedName": "CN=Kevin Anderson,OU=Engineering,OU=Users,DC=company,DC=com"
+    },
+    {
+      "Department": "Operations",
+      "DisplayName": "Jennifer Taylor",
+      "DistinguishedName": "CN=Jennifer Taylor,OU=Operations,OU=Users,DC=company,DC=com"
+    },
+    {
+      "Department": "Sales",
+      "DisplayName": "Ryan Jackson",
+      "DistinguishedName": "CN=Ryan Jackson,OU=Sales,OU=Users,DC=company,DC=com"
+    },
+    {
+      "Department": "Marketing",
+      "DisplayName": "Emma Moore",
+      "DistinguishedName": "CN=Emma Moore,OU=Marketing,OU=Users,DC=company,DC=com"
+    },
+    {
+      "Department": "Finance",
+      "DisplayName": "Christopher Thomas",
+      "DistinguishedName": "CN=Christopher Thomas,OU=Finance,OU=Users,DC=company,DC=com"
+    },
+    {
+      "Department": "HR",
+      "DisplayName": "Amanda Wilson",
+      "DistinguishedName": "CN=Amanda Wilson,OU=HR,OU=Users,DC=company,DC=com"
+    }
+  ],
+  "total_records": 20
+}

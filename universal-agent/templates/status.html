@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Device Status - MindGarden Universal Agent</title>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'SF Pro Display', 'Roboto', 'Helvetica', 'Arial', sans-serif;
+            background: #0f0f0f;
+            min-height: 100vh;
+            color: #ffffff;
+            padding: 2rem;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #1a1a1a;
+            border-radius: 12px;
+            border: 1px solid #333333;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: #8b5cf6;
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+            letter-spacing: -0.015em;
+        }
+        
+        .header p {
+            opacity: 0.9;
+            font-size: 1.1rem;
+            letter-spacing: 0.015em;
+        }
+        
+        .content {
+            padding: 2rem;
+        }
+        
+        .status-card {
+            background: #1a1a1a;
+            border: 1px solid #333333;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid #8b5cf6;
+        }
+        
+        .status-card h3 {
+            color: #ffffff;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 600;
+            letter-spacing: 0.01em;
+        }
+        
+        .status-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        
+        .status-indicator.connected {
+            background: #10b981;
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.3);
+        }
+        
+        .status-indicator.disconnected {
+            background: #ef4444;
+            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.3);
+        }
+        
+        .status-indicator.streaming {
+            background: #f59e0b;
+            box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.3);
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(245, 158, 11, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0); }
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .info-item {
+            background: #2a2a2a;
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid #333333;
+        }
+        
+        .info-item label {
+            font-weight: 600;
+            color: #ffffff;
+            font-size: 0.9rem;
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+        
+        .info-item .value {
+            color: #ffffff;
+            font-size: 1.1rem;
+        }
+        
+        .actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+        
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+            text-transform: none;
+            letter-spacing: 0.01em;
+        }
+        
+        .btn-primary {
+            background: #8b5cf6;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #7c3aed;
+        }
+        
+        .btn-secondary {
+            background: #6b7280;
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background: #4b5563;
+        }
+        
+        .btn-info {
+            background: #17a2b8;
+            color: white;
+        }
+        
+        .btn-info:hover {
+            background: #138496;
+        }
+        
+        .btn-danger {
+            background: #ef4444;
+            color: white;
+        }
+        
+        .btn-danger:hover {
+            background: #dc2626;
+        }
+        
+        .btn-sm {
+            padding: 8px 16px;
+            font-size: 0.875rem;
+        }
+        
+        .btn-warning {
+            background: #f59e0b;
+            color: white;
+        }
+        
+        .btn-warning:hover {
+            background: #d97706;
+        }
+        
+        .btn-success {
+            background: #10b981;
+            color: white;
+        }
+        
+        .btn-success:hover {
+            background: #059669;
+        }
+        
+        .device-controls {
+            border-top: 1px solid #333333;
+            padding-top: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .btn:hover {
+            transform: translateY(-1px);
+        }
+        
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .url-card {
+            background: #2a2a2a;
+            border: 1px solid #333333;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .url-card h4 {
+            color: #1976d2;
+            margin-bottom: 0.5rem;
+        }
+        
+        .url-display {
+            font-family: monospace;
+            background: #333333;
+            padding: 8px 12px;
+            border-radius: 4px;
+            border: 1px solid #444444;
+            word-break: break-all;
+            margin-bottom: 0.5rem;
+        }
+        
+        .copy-btn {
+            background: #1976d2;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+        
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 12px 20px;
+            border-radius: 8px;
+            color: white;
+            font-weight: 500;
+            z-index: 1000;
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+        }
+        
+        .notification.show {
+            transform: translateX(0);
+        }
+        
+        .notification.success {
+            background: #27ae60;
+        }
+        
+        .notification.error {
+            background: #e74c3c;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                margin: 1rem;
+                border-radius: 12px;
+            }
+            
+            .header {
+                padding: 1.5rem;
+            }
+            
+            .content {
+                padding: 1.5rem;
+            }
+            
+            .actions {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div style="display: flex; align-items: center; justify-content: center; gap: 1rem; margin-bottom: 1rem;">
+                <img src="/static/logo.png" alt="MindGarden Logo" style="width: 60px; height: 60px; object-fit: contain;">
+                <h1>Device Status</h1>
+            </div>
+            <p>MindGarden Universal Agent</p>
+        </div>
+        
+        <div class="content">
+            <!-- Connection Status -->
+            <div class="status-card">
+                <h3>
+                    <span class="status-indicator {{ 'connected' if state.device_status == 'connected' else ('streaming' if state.device_status == 'streaming' else 'disconnected') }}"></span>
+                    Connection Status
+                </h3>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <label>Registration</label>
+                        <div class="value">{{ 'Registered' if state.registered else 'Not Registered' }}</div>
+                    </div>
+                    <div class="info-item">
+                        <label>Device Status</label>
+                        <div class="value" id="deviceStatus">{{ state.device_status|title }}</div>
+                    </div>
+                    {% if state.user_info %}
+                    <div class="info-item">
+                        <label>User</label>
+                        <div class="value">{{ state.user_info.email or state.user_info.name or 'Unknown' }}</div>
+                    </div>
+                    {% endif %}
+                </div>
+                
+                <!-- Device Control Actions -->
+                {% if state.registered and state.device_id %}
+                            <div class="device-controls" style="margin-top: 1rem; display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                {% if state.device_status == 'disconnected' %}
+                <button class="btn btn-sm btn-primary" onclick="connectDevice()" id="connectBtn">Connect Device</button>
+                {% elif state.device_status == 'connected' %}
+                <button class="btn btn-sm btn-warning" onclick="disconnectDevice()" id="disconnectBtn">Disconnect Device</button>
+                <button class="btn btn-sm btn-success" onclick="startStreaming()" id="streamBtn">Start Streaming</button>
+                {% elif state.device_status == 'streaming' %}
+                <button class="btn btn-sm btn-danger" onclick="stopStreaming()" id="stopStreamBtn">Stop Streaming</button>
+                {% endif %}
+                <button class="btn btn-sm btn-secondary" onclick="showDebugInfo()" id="debugBtn">Debug Info</button>
+            </div>
+                {% endif %}
+            </div>
+            
+            <!-- Device Information -->
+            {% if state.device_config %}
+            <div class="status-card">
+                <h3>Device Information</h3>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <label>Device Name</label>
+                        <div class="value">{{ state.device_config.device_name }}</div>
+                    </div>
+                    <div class="info-item">
+                        <label>Device Model</label>
+                        <div class="value">{{ device_info.name if device_info else state.device_config.device_model }}</div>
+                    </div>
+                    {% if device_info %}
+                    <div class="info-item">
+                        <label>Channels</label>
+                        <div class="value">{{ device_info.channels }}</div>
+                    </div>
+                    <div class="info-item">
+                        <label>Sample Rate</label>
+                        <div class="value">{{ device_info.sample_rate }} Hz</div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            {% endif %}
+            
+            <!-- Network Information -->
+            {% if state.tunnel_url %}
+            <div class="url-card">
+                <h4>Public Access URL</h4>
+                <div class="url-display" id="tunnelUrl">{{ state.tunnel_url }}</div>
+                <button class="copy-btn" onclick="copyUrl()">Copy URL</button>
+                <p style="font-size: 0.9rem; color: #666; margin-top: 0.5rem;">
+                    This device can be accessed from anywhere using this URL.
+                </p>
+            </div>
+            {% endif %}
+            
+            <!-- Actions -->
+            <div class="actions">
+                {% if not state.registered %}
+                <a href="/" class="btn btn-primary">Register Device</a>
+                {% else %}
+                <button class="btn btn-secondary" onclick="refreshStatus()">Refresh Status</button>
+                <button class="btn btn-danger" onclick="logout()">Logout & Reset</button>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    
+    <div id="notification" class="notification"></div>
+
+    <script>
+        function copyUrl() {
+            const urlElement = document.getElementById('tunnelUrl');
+            const url = urlElement.textContent;
+            
+            navigator.clipboard.writeText(url).then(() => {
+                showNotification('URL copied to clipboard!', 'success');
+            }).catch(() => {
+                // Fallback for older browsers
+                const textArea = document.createElement('textarea');
+                textArea.value = url;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                showNotification('URL copied to clipboard!', 'success');
+            });
+        }
+        
+        async function refreshStatus() {
+            try {
+                const response = await fetch('/api/device/status');
+                if (response.ok) {
+                    location.reload();
+                } else {
+                    showNotification('Failed to refresh status', 'error');
+                }
+            } catch (error) {
+                showNotification('Network error: ' + error.message, 'error');
+            }
+        }
+        
+        async function logout() {
+            if (!confirm('Are you sure you want to logout and reset this device?')) {
+                return;
+            }
+            
+            try {
+                const response = await fetch('/api/logout', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                if (response.ok) {
+                    showNotification('Device reset successfully', 'success');
+                    setTimeout(() => {
+                        window.location.href = '/';
+                    }, 1500);
+                } else {
+                    showNotification('Failed to logout', 'error');
+                }
+            } catch (error) {
+                showNotification('Network error: ' + error.message, 'error');
+            }
+        }
+        
+        function showNotification(message, type) {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.className = `notification ${type}`;
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+        
+        // Device control functions
+        async function connectDevice() {
+            try {
+                const response = await fetch('/api/device/connect', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' }
+                });
+                const result = await response.json();
+                if (response.ok && result.success) {
+                    showNotification('Device connected successfully', 'success');
+                    setTimeout(() => location.reload(), 1000);
+                } else {
+                    showNotification(result.error || 'Failed to connect device', 'error');
+                }
+            } catch (error) {
+                showNotification('Network error: ' + error.message, 'error');
+            }
+        }
+        
+        async function disconnectDevice() {
+            try {
+                const response = await fetch('/api/device/disconnect', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' }
+                });
+                const result = await response.json();
+                if (response.ok && result.success) {
+                    showNotification('Device disconnected', 'success');
+                    setTimeout(() => location.reload(), 1000);
+                } else {
+                    showNotification(result.error || 'Failed to disconnect device', 'error');
+                }
+            } catch (error) {
+                showNotification('Network error: ' + error.message, 'error');
+            }
+        }
+        
+        async function startStreaming() {
+            try {
+                const response = await fetch('/api/device/stream/start', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' }
+                });
+                const result = await response.json();
+                if (response.ok && result.success) {
+                    showNotification('Streaming started', 'success');
+                    setTimeout(() => location.reload(), 1000);
+                } else {
+                    showNotification(result.error || 'Failed to start streaming', 'error');
+                }
+            } catch (error) {
+                showNotification('Network error: ' + error.message, 'error');
+            }
+        }
+        
+        async function stopStreaming() {
+            try {
+                const response = await fetch('/api/device/stream/stop', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' }
+                });
+                const result = await response.json();
+                if (response.ok && result.success) {
+                    showNotification('Streaming stopped', 'success');
+                    setTimeout(() => location.reload(), 1000);
+                } else {
+                    showNotification(result.error || 'Failed to stop streaming', 'error');
+                }
+            } catch (error) {
+                showNotification('Network error: ' + error.message, 'error');
+            }
+        }
+        
+        async function showDebugInfo() {
+            try {
+                // Get device type from the page
+                const deviceModel = '{{ state.device_config.device_model if state.device_config else "" }}';
+                
+                let debugInfo = "=== DEVICE DEBUG INFO ===\n\n";
+                
+                // Always get device manager info
+                const devicesResponse = await fetch('/api/debug/devices');
+                const devicesData = await devicesResponse.json();
+                
+                debugInfo += "App State:\n";
+                debugInfo += JSON.stringify(devicesData.app_state, null, 2) + "\n\n";
+                debugInfo += "Device Manager:\n";
+                debugInfo += JSON.stringify(devicesData.device_manager, null, 2) + "\n\n";
+                
+                // Call device-specific debug endpoint
+                if (deviceModel && deviceModel.startsWith('emotiv')) {
+                    // EMOTIV device - get HID and USB info
+                    const [hidResponse, usbResponse] = await Promise.all([
+                        fetch('/api/debug/hid'),
+                        fetch('/api/debug/usb')
+                    ]);
+                    
+                    const hidData = await hidResponse.json();
+                    const usbData = await usbResponse.json();
+                    
+                    debugInfo += "HID Devices:\n";
+                    hidData.hid_devices.forEach(device => {
+                        debugInfo += `  ${device.vendor_id_hex}:${device.product_id_hex} - ${device.manufacturer} ${device.product}`;
+                        if (device.is_emotiv) debugInfo += " *** EMOTIV ***";
+                        debugInfo += "\n";
+                    });
+                    debugInfo += "\nEMOTIV Devices Found: " + hidData.emotiv_devices.length + "\n\n";
+                    
+                    debugInfo += "USB Devices:\n";
+                    debugInfo += JSON.stringify(usbData, null, 2) + "\n\n";
+                    
+                } else if (deviceModel && deviceModel.startsWith('pieeg')) {
+                    // PiEEG device - get SPI/GPIO info
+                    const pieegResponse = await fetch('/api/debug/pieeg');
+                    const pieegData = await pieegResponse.json();
+                    
+                    debugInfo += "PiEEG Debug Info:\n";
+                    debugInfo += JSON.stringify(pieegData, null, 2) + "\n\n";
+                    
+                } else {
+                    debugInfo += "Unknown device type: " + deviceModel + "\n";
+                }
+                
+                // Show in modal or alert
+                if (confirm("Debug info copied to clipboard. Click OK to see in alert.")) {
+                    navigator.clipboard.writeText(debugInfo);
+                    alert(debugInfo);
+                }
+                
+            } catch (error) {
+                showNotification('Debug info error: ' + error.message, 'error');
+            }
+        }
+
+
+
+        // Auto-refresh status every 10 seconds
+        setInterval(async () => {
+            try {
+                const response = await fetch('/api/device/status');
+                if (response.ok) {
+                    const status = await response.json();
+                    const statusElement = document.getElementById('deviceStatus');
+                    if (statusElement && statusElement.textContent.toLowerCase() !== status.device_status) {
+                        // Status changed, reload the page to update UI
+                        location.reload();
+                    }
+                }
+            } catch (error) {
+                console.error('Status refresh error:', error);
+            }
+        }, 10000);
+        
+        // Check for URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const success = urlParams.get('success');
+        const error = urlParams.get('error');
+        
+        if (success) {
+            showNotification(success, 'success');
+        } else if (error) {
+            showNotification('Error: ' + error, 'error');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,394 @@
+{
+  "mgflow_name": "Simple Transform",
+  "description": "Exported mgflow flow",
+  "version": "1.0.0",
+  "created_by": "MindGarden Platform",
+  "flow": {
+    "nodes": [
+      {
+        "id": "file_1754581617805",
+        "type": "file",
+        "position": {
+          "x": 198.32353663043864,
+          "y": 245.24804335395277
+        },
+        "data": {
+          "label": "File Node",
+          "config": {
+            "file_name": "sample_ad_users.csv",
+            "file_type": "csv",
+            "file_id": 1,
+            "file_schema": [
+              {
+                "description": "Department (string)",
+                "examples": [
+                  "Engineering",
+                  "Marketing",
+                  "Sales"
+                ],
+                "length": {
+                  "avg": 7.7,
+                  "max": 11,
+                  "min": 2
+                },
+                "name": "department",
+                "nullable": false,
+                "type": "string"
+              },
+              {
+                "description": "Name or title",
+                "examples": [
+                  "John Smith",
+                  "Maria Johnson",
+                  "Robert Brown"
+                ],
+                "length": {
+                  "avg": 12.4,
+                  "max": 18,
+                  "min": 9
+                },
+                "name": "displayName",
+                "nullable": false,
+                "type": "string"
+              },
+              {
+                "description": "Name or title",
+                "examples": [
+                  "CN=John Smith,OU=Engineering,OU=Users,DC=company,DC=com",
+                  "CN=Maria Johnson,OU=Marketing,OU=Users,DC=company,DC=com",
+                  "CN=Robert Brown,OU=Sales,OU=Users,DC=company,DC=com"
+                ],
+                "length": {
+                  "avg": 54.1,
+                  "max": 59,
+                  "min": 49
+                },
+                "name": "distinguishedName",
+                "nullable": false,
+                "type": "string"
+              },
+              {
+                "description": "Unique identifier",
+                "examples": [
+                  "EMP001",
+                  "EMP002",
+                  "EMP003"
+                ],
+                "length": {
+                  "avg": 6,
+                  "max": 6,
+                  "min": 6
+                },
+                "name": "employeeID",
+                "nullable": false,
+                "type": "string"
+              },
+              {
+                "description": "Name or title",
+                "examples": [
+                  "John",
+                  "Maria",
+                  "Robert"
+                ],
+                "length": {
+                  "avg": 5.45,
+                  "max": 11,
+                  "min": 4
+                },
+                "name": "givenName",
+                "nullable": false,
+                "type": "string"
+              },
+              {
+                "description": "Time value",
+                "examples": [
+                  "2025-01-15T09:30:00Z",
+                  "2025-01-15T08:45:00Z",
+                  "2025-01-15T07:15:00Z"
+                ],
+                "name": "lastLogonTimestamp",
+                "nullable": false,
+                "type": "date"
+              },
+              {
+                "description": "Mail (email)",
+                "examples": [
+                  "john.smith@company.com",
+                  "maria.johnson@company.com",
+                  "robert.brown@company.com"
+                ],
+                "name": "mail",
+                "nullable": false,
+                "type": "email"
+              },
+              {
+                "description": "Age in years",
+                "examples": [
+                  "mwilson",
+                  "rbrown",
+                  "jdavis"
+                ],
+                "length": {
+                  "avg": 7.066666666666666,
+                  "max": 9,
+                  "min": 6
+                },
+                "name": "manager",
+                "nullable": true,
+                "type": "string"
+              },
+              {
+                "description": "Name or title",
+                "examples": [
+                  "Building A - Floor 3",
+                  "Building B - Floor 2",
+                  "Building A - Floor 4"
+                ],
+                "length": {
+                  "avg": 20,
+                  "max": 20,
+                  "min": 20
+                },
+                "name": "physicalDeliveryOfficeName",
+                "nullable": false,
+                "type": "string"
+              },
+              {
+                "description": "Name or title",
+                "examples": [
+                  "jsmith",
+                  "mjohnson",
+                  "rbrown"
+                ],
+                "length": {
+                  "avg": 6.95,
+                  "max": 9,
+                  "min": 4
+                },
+                "name": "sAMAccountName",
+                "nullable": false,
+                "type": "string"
+              },
+              {
+                "description": "Name or title",
+                "examples": [
+                  "Smith",
+                  "Johnson",
+                  "Brown"
+                ],
+                "length": {
+                  "avg": 5.95,
+                  "max": 8,
+                  "min": 3
+                },
+                "name": "surname",
+                "nullable": false,
+                "type": "string"
+              },
+              {
+                "description": "Phone number",
+                "examples": [
+                  "555-0101",
+                  "555-0102",
+                  "555-0103"
+                ],
+                "length": {
+                  "avg": 8,
+                  "max": 8,
+                  "min": 8
+                },
+                "name": "telephoneNumber",
+                "nullable": false,
+                "type": "string"
+              },
+              {
+                "description": "Title (string)",
+                "examples": [
+                  "Senior Software Engineer",
+                  "Marketing Manager",
+                  "Director of Sales"
+                ],
+                "length": {
+                  "avg": 18.2,
+                  "max": 28,
+                  "min": 9
+                },
+                "name": "title",
+                "nullable": false,
+                "type": "string"
+              },
+              {
+                "description": "Count or quantity",
+                "examples": [
+                  "512",
+                  "514"
+                ],
+                "name": "userAccountControl",
+                "nullable": false,
+                "range": {
+                  "max": 514,
+                  "mean": 512.1,
+                  "min": 512
+                },
+                "type": "number"
+              },
+              {
+                "description": "Creation timestamp",
+                "examples": [
+                  "2023-03-15T10:00:00Z",
+                  "2023-02-20T14:30:00Z",
+                  "2022-11-10T09:00:00Z"
+                ],
+                "name": "whenCreated",
+                "nullable": false,
+                "type": "date"
+              }
+            ]
+          }
+        },
+        "width": 220,
+        "height": 204,
+        "selected": false,
+        "positionAbsolute": {
+          "x": 198.32353663043864,
+          "y": 245.24804335395277
+        },
+        "dragging": false
+      },
+      {
+        "id": "transform_1754581870380",
+        "type": "transform",
+        "position": {
+          "x": 685.0519088864536,
+          "y": 138.1689933257893
+        },
+        "data": {
+          "label": "Transform Node",
+          "config": {
+            "attribute_mappings": {
+              "department": {
+                "type": "direct",
+                "sourceField": "department",
+                "sourceField1": "",
+                "sourceField2": "",
+                "value": "",
+                "expression": "",
+                "function": "sum",
+                "splitOn": "",
+                "separator": ""
+              },
+              "displayName": {
+                "type": "concatenate",
+                "sourceField": "",
+                "sourceField1": "givenName",
+                "sourceField2": "surname",
+                "value": "",
+                "expression": "",
+                "function": "sum",
+                "splitOn": "",
+                "separator": "' '"
+              }
+            },
+            "mappings": {
+              "department": {
+                "type": "direct",
+                "sourceField": "department",
+                "sourceField1": "",
+                "sourceField2": "",
+                "value": "",
+                "expression": "",
+                "function": "sum",
+                "splitOn": "",
+                "separator": ""
+              },
+              "displayName": {
+                "type": "concatenate",
+                "sourceField": "",
+                "sourceField1": "givenName",
+                "sourceField2": "surname",
+                "value": "",
+                "expression": "",
+                "function": "sum",
+                "splitOn": "",
+                "separator": "' '"
+              }
+            }
+          }
+        },
+        "width": 220,
+        "height": 249,
+        "selected": false,
+        "positionAbsolute": {
+          "x": 685.0519088864536,
+          "y": 138.1689933257893
+        },
+        "dragging": false
+      },
+      {
+        "id": "storage_1754581877960",
+        "type": "storage",
+        "position": {
+          "x": 1242.3190562113973,
+          "y": 311.9041738179269
+        },
+        "data": {
+          "label": "Storage Node",
+          "config": {
+            "storage_id": 1,
+            "storage_name": "Blob1",
+            "storage_type": "blob_storage",
+            "storage_mappings": {
+              "Department": {
+                "type": "direct",
+                "source": "department"
+              },
+              "name": {
+                "type": "direct",
+                "source": "displayName"
+              }
+            },
+            "database_schema": []
+          }
+        },
+        "width": 220,
+        "height": 123,
+        "selected": true,
+        "positionAbsolute": {
+          "x": 1242.3190562113973,
+          "y": 311.9041738179269
+        },
+        "dragging": false
+      }
+    ],
+    "edges": [
+      {
+        "type": "animated",
+        "animated": true,
+        "source": "file_1754581617805",
+        "sourceHandle": "data_output",
+        "target": "transform_1754581870380",
+        "targetHandle": "data_input",
+        "data": {
+          "sourceHandle": "data_output",
+          "targetHandle": "data_input"
+        },
+        "id": "reactflow__edge-file_1754581617805data_output-transform_1754581870380data_input"
+      },
+      {
+        "type": "animated",
+        "animated": true,
+        "source": "transform_1754581870380",
+        "sourceHandle": "data_output",
+        "target": "storage_1754581877960",
+        "targetHandle": "data_input_1",
+        "data": {
+          "sourceHandle": "data_output",
+          "targetHandle": "data_input_1"
+        },
+        "id": "reactflow__edge-transform_1754581870380data_output-storage_1754581877960data_input_1"
+      }
+    ]
+  },
+  "exported_at": "2025-08-07T15:52:45.002Z",
+  "mgflow_id": 1
+}

@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MindGarden Universal Agent</title>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'SF Pro Display', 'Roboto', 'Helvetica', 'Arial', sans-serif;
+            background: #0f0f0f;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+        }
+        
+        .container {
+            background: #1a1a1a;
+            border-radius: 12px;
+            border: 1px solid #333333;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            padding: 3rem;
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+        }
+        
+        .logo {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        
+        h1 {
+            color: #ffffff;
+            margin-bottom: 0.5rem;
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: -0.015em;
+        }
+        
+        .subtitle {
+            color: #888888;
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+            letter-spacing: 0.015em;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #ffffff;
+            letter-spacing: 0.01em;
+        }
+        
+        input, select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #333333;
+            border-radius: 8px;
+            font-size: 1rem;
+            background-color: #1a1a1a;
+            color: #ffffff;
+            transition: border-color 0.3s ease;
+        }
+        
+        input:focus, select:focus {
+            outline: none;
+            border-color: #8b5cf6;
+        }
+        
+        input:hover, select:hover {
+            border-color: #8b5cf6;
+        }
+        
+        .btn {
+            background: #8b5cf6;
+            color: white;
+            border: none;
+            padding: 16px 32px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s ease, transform 0.2s ease;
+            width: 100%;
+            margin-top: 1rem;
+            text-transform: none;
+            letter-spacing: 0.01em;
+        }
+        
+        .btn:hover {
+            background: #7c3aed;
+            transform: translateY(-1px);
+        }
+        
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+            border: none;
+            font-size: 0.9rem;
+            padding: 8px 20px;
+            width: auto;
+            margin-top: 0.5rem;
+        }
+        
+        .btn-secondary:hover {
+            background: #545b62;
+            transform: translateY(-2px);
+        }
+        
+        .status {
+            margin-top: 1rem;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: 500;
+        }
+        
+        .status.success {
+            background: rgba(16, 185, 129, 0.1);
+            color: #10b981;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+        
+        .status.error {
+            background: rgba(239, 68, 68, 0.1);
+            color: #ef4444;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+        
+        .device-info {
+            background: #1a1a1a;
+            border: 1px solid #333333;
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+            text-align: left;
+        }
+        
+        .device-info h3 {
+            color: #ffffff;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+        
+        .device-info p {
+            color: #888888;
+            font-size: 0.9rem;
+            margin: 0.25rem 0;
+        }
+        
+        .tunnel-info {
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            color: #3b82f6;
+        }
+        
+        .tunnel-url {
+            font-family: monospace;
+            background: #1a1a1a;
+            color: #ffffff;
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid #333333;
+            margin-top: 0.5rem;
+            word-break: break-all;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 2rem;
+                margin: 1rem;
+            }
+            
+            h1 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <img src="/static/logo.png" alt="MindGarden Logo">
+        </div>
+        <h1>MindGarden Universal Agent</h1>
+        <p class="subtitle">Connect your EEG device to the MindGarden platform</p>
+        
+        <form id="registrationForm">
+            <div class="form-group">
+                <label for="deviceName">Device Name</label>
+                <input type="text" id="deviceName" name="deviceName" 
+                       placeholder="My EEG Device" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="deviceModel">Device Type</label>
+                <select id="deviceModel" name="deviceModel" required>
+                    <option value="">Select your device...</option>
+                    {% for model, info in devices.items() %}
+                    <option value="{{ model }}">{{ info.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            
+            <div id="deviceInfo" class="device-info" style="display: none;">
+                <h3>Device Information</h3>
+                <p id="deviceChannels"></p>
+                <p id="deviceSampleRate"></p>
+                <p id="deviceConnection"></p>
+            </div>
+            
+            <button type="submit" class="btn" id="registerBtn">
+                Register Device
+            </button>
+        </form>
+        
+        <div id="status" class="status" style="display: none;"></div>
+        
+        <!-- for debugging -->
+        <div id="diagnosticsSection" style="display: none; margin-top: 1rem;">
+            <button type="button" class="btn btn-secondary" id="diagnosticsBtn" onclick="showDiagnostics()">
+                🔍 Show Diagnostics
+            </button>
+        </div>
+        
+        {% if tunnel_url %}
+        <div class="tunnel-info">
+            <h3>🌐 Agent Available At</h3>
+            <div class="tunnel-url">{{ tunnel_url }}</div>
+            <small>This agent is publicly accessible via Cloudflare Tunnel</small>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- Device data populated by server-side template -->
+    <script type="application/json" id="deviceData">
+        {
+            {% for model, info in devices.items() %}
+            "{{ model }}": {
+                "name": "{{ info.name }}",
+                "channels": {{ info.channels }},
+                "sample_rate": {{ info.sample_rate }},
+                "connection_type": "{{ info.connection_type }}"
+            }{% if not loop.last %},{% endif %}
+            {% endfor %}
+        }
+    </script>
+    
+    <script>
+        const form = document.getElementById('registrationForm');
+        const deviceModel = document.getElementById('deviceModel');
+        const deviceInfo = document.getElementById('deviceInfo');
+        const status = document.getElementById('status');
+        const registerBtn = document.getElementById('registerBtn');
+        
+        // Parse device data from JSON
+        const deviceData = JSON.parse(document.getElementById('deviceData').textContent);
+        
+        deviceModel.addEventListener('change', function() {
+            const selected = this.value;
+            if (selected && deviceData[selected]) {
+                const info = deviceData[selected];
+                document.getElementById('deviceChannels').textContent = `Channels: ${info.channels}`;
+                document.getElementById('deviceSampleRate').textContent = `Sample Rate: ${info.sample_rate} Hz`;
+                document.getElementById('deviceConnection').textContent = `Connection: ${info.connection_type}`;
+                deviceInfo.style.display = 'block';
+            } else {
+                deviceInfo.style.display = 'none';
+            }
+        });
+        
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(form);
+            const data = {
+                device_name: formData.get('deviceName'),
+                device_model: formData.get('deviceModel')
+            };
+            
+            registerBtn.disabled = true;
+            registerBtn.textContent = 'Registering...';
+            showStatus('Initializing registration...', 'info');
+            
+            try {
+                const response = await fetch('/api/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                const result = await response.json();
+                
+                if (response.ok && result.auth_url) {
+                    showStatus('Redirecting to authentication...', 'success');
+                    setTimeout(() => {
+                        window.location.href = result.auth_url;
+                    }, 1000);
+                } else {
+                    const errorMsg = result.error || 'Registration failed';
+                    showStatus(errorMsg, 'error');
+                    
+                    // Show diagnostics button if device not found
+                    if (errorMsg.includes('EMOTIV device') || errorMsg.includes('device found')) {
+                        document.getElementById('diagnosticsSection').style.display = 'block';
+                    }
+                    
+                    registerBtn.disabled = false;
+                    registerBtn.textContent = 'Register Device';
+                }
+            } catch (error) {
+                showStatus('Network error: ' + error.message, 'error');
+                registerBtn.disabled = false;
+                registerBtn.textContent = 'Register Device';
+            }
+        });
+        
+        function showStatus(message, type) {
+            status.textContent = message;
+            status.className = `status ${type}`;
+            status.style.display = 'block';
+        }
+        
+        async function showDiagnostics() {
+            try {
+                const diagnosticsBtn = document.getElementById('diagnosticsBtn');
+                diagnosticsBtn.disabled = true;
+                diagnosticsBtn.textContent = '🔍 Loading...';
+                
+                const [devicesResponse, hidResponse] = await Promise.all([
+                    fetch('/api/debug/devices'),
+                    fetch('/api/debug/hid')
+                ]);
+                
+                const devicesData = await devicesResponse.json();
+                const hidData = await hidResponse.json();
+                
+                let debugInfo = "=== HID DEVICE DIAGNOSTICS ===\n\n";
+                
+                if (hidData.success) {
+                    debugInfo += `Total HID devices found: ${hidData.total_devices}\n`;
+                    debugInfo += `EMOTIV devices found: ${hidData.emotiv_count}\n\n`;
+                    
+                    if (hidData.total_devices === 0) {
+                        debugInfo += "❌ NO HID DEVICES DETECTED\n";
+                        debugInfo += "This means Docker can't access USB devices.\n";
+                        debugInfo += "Possible fixes:\n";
+                        debugInfo += "1. Ensure EMOTIV USB dongle is plugged in\n";
+                        debugInfo += "2. Try unplugging/replugging the USB dongle\n";
+                        debugInfo += "3. Check Docker Desktop USB passthrough settings\n\n";
+                    } else {
+                        debugInfo += "HID Devices detected:\n";
+                        hidData.hid_devices.forEach((device, i) => {
+                            debugInfo += `${i+1}. ${device.vendor_id_hex}:${device.product_id_hex} - ${device.manufacturer} ${device.product}`;
+                            if (device.is_emotiv) debugInfo += " *** EMOTIV ***";
+                            debugInfo += "\n";
+                        });
+                        debugInfo += "\n";
+                    }
+                    
+                    debugInfo += "System Info:\n";
+                    debugInfo += `Platform: ${hidData.system_info.platform}\n`;
+                    debugInfo += `Container: ${hidData.system_info.is_docker ? 'Yes' : 'No'}\n`;
+                    debugInfo += `User ID: ${hidData.system_info.user_id}\n`;
+                    debugInfo += `/dev readable: ${hidData.system_info.dev_readable}\n`;
+                    debugInfo += `/dev writable: ${hidData.system_info.dev_writable}\n`;
+                    debugInfo += `Groups: ${hidData.system_info.groups.join(', ')}\n\n`;
+                    
+                    debugInfo += "USB Device Paths:\n";
+                    for (const [path, count] of Object.entries(hidData.usb_paths)) {
+                        debugInfo += `${path}: ${count} devices\n`;
+                    }
+                } else {
+                    debugInfo += `❌ Error getting diagnostics: ${hidData.error}\n`;
+                    if (hidData.traceback) {
+                        debugInfo += `\nTraceback:\n${hidData.traceback}`;
+                    }
+                }
+                
+                // Copy to clipboard and show in alert
+                if (navigator.clipboard) {
+                    await navigator.clipboard.writeText(debugInfo);
+                    alert("Diagnostics copied to clipboard!\n\n" + debugInfo);
+                } else {
+                    alert(debugInfo);
+                }
+                
+                diagnosticsBtn.disabled = false;
+                diagnosticsBtn.textContent = '🔍 Show Diagnostics';
+                
+            } catch (error) {
+                alert('Error getting diagnostics: ' + error.message);
+                document.getElementById('diagnosticsBtn').disabled = false;
+                document.getElementById('diagnosticsBtn').textContent = '🔍 Show Diagnostics';
+            }
+        }
+        
+        // Check for URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const error = urlParams.get('error');
+        const success = urlParams.get('success');
+        
+        if (error) {
+            showStatus('Error: ' + error, 'error');
+        } else if (success) {
+            showStatus(success, 'success');
+        }
+    </script>
+</body>
+</html>

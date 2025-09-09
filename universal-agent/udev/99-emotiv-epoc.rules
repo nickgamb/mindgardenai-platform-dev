@@ -1,0 +1,29 @@
+# UDEV rules for EMOTIV EPOC devices
+# Copy this file to /etc/udev/rules.d/99-emotiv-epoc.rules
+# Then run: sudo udevadm control --reload-rules && sudo udevadm trigger
+
+# EMOTIV EPOC X and newer devices (USB interface)
+SUBSYSTEM=="usb", ATTRS{idVendor}=="1234", ATTRS{idProduct}=="ed02", MODE="0666", GROUP="plugdev"
+SUBSYSTEM=="usb", ATTRS{idVendor}=="21a1", ATTRS{idProduct}=="0001", MODE="0666", GROUP="plugdev"
+
+# EMOTIV EPOC devices (HID interface)
+SUBSYSTEM=="hidraw", ATTRS{idVendor}=="1234", ATTRS{idProduct}=="ed02", MODE="0666", GROUP="plugdev"
+SUBSYSTEM=="hidraw", ATTRS{idVendor}=="21a1", ATTRS{idProduct}=="0001", MODE="0666", GROUP="plugdev"
+
+# EMOTIV devices by manufacturer and product
+SUBSYSTEM=="usb", ATTRS{manufacturer}=="Emotiv Systems Pty Ltd", MODE="0666", GROUP="plugdev"
+SUBSYSTEM=="hidraw", ATTRS{manufacturer}=="Emotiv Systems Pty Ltd", MODE="0666", GROUP="plugdev"
+
+# EMOTIV devices by product name
+SUBSYSTEM=="usb", ATTRS{product}=="Receiver Dongle L01", MODE="0666", GROUP="plugdev"
+SUBSYSTEM=="hidraw", ATTRS{product}=="Receiver Dongle L01", MODE="0666", GROUP="plugdev"
+
+# EMOTIV devices by interface name
+SUBSYSTEM=="usb", ATTRS{interface}=="Emotiv RAW DATA", MODE="0666", GROUP="plugdev"
+SUBSYSTEM=="hidraw", ATTRS{interface}=="Emotiv RAW DATA", MODE="0666", GROUP="plugdev"
+
+# Create symlinks for easy access
+SUBSYSTEM=="usb", ATTRS{idVendor}=="1234", SYMLINK+="emotiv-epoc"
+SUBSYSTEM=="usb", ATTRS{idVendor}=="21a1", SYMLINK+="emotiv-epoc"
+SUBSYSTEM=="hidraw", ATTRS{idVendor}=="1234", SYMLINK+="emotiv-epoc"
+SUBSYSTEM=="hidraw", ATTRS{idVendor}=="21a1", SYMLINK+="emotiv-epoc" 

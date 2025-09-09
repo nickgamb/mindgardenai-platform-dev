@@ -1,0 +1,34 @@
+#   docker build -f OllamaServerDockerfile -t ollama/ollama:latest .
+#   docker network create alden
+#   docker run --gpus all -d --name ollama --network alden -p 11434:11434 ollama/ollama:latest
+
+#   or
+
+#   docker run --gpus all -d --name ollama --network alden -p 11434:11434 \
+#   -v ollama-models:/root/.ollama/models \
+#  ollama/ollama:latest
+
+#   or
+
+#   docker run --gpus all -d --name ollama --network alden -p 11434:11434 \
+#   -v /path/on/host/ollama-models:/root/.ollama/models \
+#   ollama/ollama:latest
+
+#   docker logs -f ollama
+#   docker cp ollama:/root/.ollama/models/blobs C:\Users\Nick\Documents\GitHub\mindgardenai-platform\ollama-models
+
+# Ollama Server Dockerfile
+FROM ollama/ollama:latest
+
+# Create the models directory in the container
+RUN mkdir -p /usr/share/ollama/.ollama/models/blobs
+
+# Copy pre-downloaded models from the build context if they exist
+COPY ../ollama-models/ /root/.ollama/models/blobs/
+
+COPY ollama_start.sh /ollama_start.sh
+RUN chmod +x /ollama_start.sh
+
+EXPOSE 11434
+
+ENTRYPOINT ["/bin/sh", "/ollama_start.sh"]

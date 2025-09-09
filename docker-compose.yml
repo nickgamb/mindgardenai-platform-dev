@@ -1,0 +1,132 @@
+version: '3.8'
+
+services:
+  neo4j:
+    build:
+      context: ./graph
+      dockerfile: Dockerfile
+    container_name: mindgarden-platform-neo4j
+    ports:
+      - "7474:7474"
+      - "7687:7687"
+    environment:
+      - NEO4J_AUTH=${NEO4J_AUTH}
+      - NEO4J_PLUGINS=["apoc"]
+      - NEO4J_dbms_security_procedures_unrestricted=apoc.*
+      - NEO4J_apoc_export_file_enabled=true
+      - NEO4J_apoc_import_file_enabled=true
+      - NEO4J_apoc_import_file_use__neo4j__config=true
+    volumes:
+      - neo4j-data:/data
+      - neo4j-logs:/logs
+    networks:
+      - mindgarden-platform
+    restart: unless-stopped
+
+  redis:
+    image: redis:7-alpine
+    container_name: mindgarden-platform-redis
+    ports:
+      - "6379:6379"
+    networks:
+      - mindgarden-platform
+    restart: unless-stopped
+    command: redis-server --appendonly yes
+    volumes:
+      - redis-data:/data
+
+  postgres:
+    image: postgres:15-alpine
+    container_name: mindgarden-platform-postgres
+    environment:
+      - POSTGRES_USER=${PG_USER}
+      - POSTGRES_PASSWORD=${PG_PASSWORD}
+      - POSTGRES_DB=${PG_DB}
+    ports:
+      - "5432:5432"
+    volumes:
+      - pg-data:/var/lib/postgresql/data
+    networks:
+      - mindgarden-platform
+    restart: unless-stopped
+
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: mindgarden-platform-server
+    ports:
+      - "5000:5000"
+    environment:
+      - ENV=prod
+      - PORT=5000
+      - DATABASE_PATH=/app/data/mindgarden.db
+      - UPLOAD_FOLDER=/app/data/uploads
+      - AUTH0_CLIENT_ID=${AUTH0_CLIENT_ID}
+      - AUTH0_CLIENT_SECRET=${AUTH0_CLIENT_SECRET}
+      - AUTH0_DOMAIN=${AUTH0_DOMAIN}
+      - AUTH0_REDIRECT_URI=${AUTH0_REDIRECT_URI}
+      - AUTH0_API_IDENTIFIER=${AUTH0_API_IDENTIFIER}
+      - AUTH0_MGMT_CLIENT_ID=${AUTH0_MGMT_CLIENT_ID}
+      - AUTH0_MGMT_CLIENT_SECRET=${AUTH0_MGMT_CLIENT_SECRET}
+      - CLIENT_ORIGIN=${CLIENT_ORIGIN}
+      - VERSION=${VERSION}
+      - FLASK_SECRET_KEY=${FLASK_SECRET_KEY}
+      - MODE=${MODE}
+      - PG_HOST=postgres
+      - PG_PORT=5432
+      - PG_DB=${PG_DB}
+      - PG_USER=${PG_USER}
+      - PG_PASSWORD=${PG_PASSWORD}
+      - NEO4J_URI=${NEO4J_URI}
+      - NEO4J_USER=${NEO4J_USER}
+      - NEO4J_PASSWORD=${NEO4J_PASSWORD}
+      - ENABLE_RBAC=${ENABLE_RBAC}
+      - VEZA_API_URL=${VEZA_API_URL}
+      - API_BASE_URL=${API_BASE_URL}
+      - FLASK_SESSION_TYPE=redis
+      - FLASK_SESSION_REDIS_URL=redis://redis:6379/0
+    volumes:
+      - ./server/data:/app/data
+    networks:
+      - mindgarden-platform
+    depends_on:
+      - redis
+      - neo4j
+      - postgres
+    restart: unless-stopped
+
+  web-client:
+    build:
+      context: ./web-client
+      dockerfile: Dockerfile
+    container_name: mindgarden-platform-web
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_SERVER_URL}
+      - NEXT_PUBLIC_API_SERVER_URL=${NEXT_PUBLIC_API_SERVER_URL}
+      - NEXT_PUBLIC_AUTH0_DOMAIN=${AUTH0_DOMAIN}
+      - NEXT_PUBLIC_AUTH0_CLIENT_ID=${AUTH0_CLIENT_ID}
+      - NEXT_PUBLIC_AUTH0_API_IDENTIFIER=${AUTH0_API_IDENTIFIER}
+      - NEXT_PUBLIC_AUTH0_CALLBACK_URL=${AUTH0_REDIRECT_URI}
+      - NEXT_PUBLIC_ENABLE_RBAC=${ENABLE_RBAC}
+    networks:
+      - mindgarden-platform
+    depends_on:
+      - server
+    restart: unless-stopped
+
+networks:
+  mindgarden-platform:
+    driver: bridge
+
+volumes:
+  redis-data:
+  neo4j-data:
+  neo4j-logs:
+  pg-data:
+
+

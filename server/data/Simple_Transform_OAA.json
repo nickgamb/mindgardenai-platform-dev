@@ -1,0 +1,378 @@
+{
+  "mgflow_name": "Simple Transform",
+  "description": "Exported mgflow flow",
+  "version": "1.0.0",
+  "created_by": "MindGarden Platform",
+  "flow": {
+    "nodes": [
+      {
+        "id": "file_1754581617805",
+        "type": "file",
+        "position": {
+          "x": 198.32353663043864,
+          "y": 245.24804335395277
+        },
+        "data": {
+          "label": "File Node",
+          "config": {
+            "file_name": "sample_ad_users.csv",
+            "file_type": "csv",
+            "file_id": 1,
+            "file_schema": [
+              {
+                "description": "Department (string)",
+                "examples": [
+                  "Engineering",
+                  "Marketing",
+                  "Sales"
+                ],
+                "length": {
+                  "avg": 7.7,
+                  "max": 11,
+                  "min": 2
+                },
+                "name": "department",
+                "nullable": false,
+                "type": "string"
+              },
+              {
+                "description": "Name or title",
+                "examples": [
+                  "John Smith",
+                  "Maria Johnson",
+                  "Robert Brown"
+                ],
+                "length": {
+                  "avg": 12.4,
+                  "max": 18,
+                  "min": 9
+                },
+                "name": "displayName",
+                "nullable": false,
+                "type": "string"
+              },
+              {
+                "description": "Name or title",
+                "examples": [
+                  "CN=John Smith,OU=Engineering,OU=Users,DC=company,DC=com",
+                  "CN=Maria Johnson,OU=Marketing,OU=Users,DC=company,DC=com",
+                  "CN=Robert Brown,OU=Sales,OU=Users,DC=company,DC=com"
+                ],
+                "length": {
+                  "avg": 54.1,
+                  "max": 59,
+                  "min": 49
+                },
+                "name": "distinguishedName",
+                "nullable": false,
+                "type": "string"
+              },
+              {
+                "description": "Unique identifier",
+                "examples": [
+                  "EMP001",
+                  "EMP002",
+                  "EMP003"
+                ],
+                "length": {
+                  "avg": 6,
+                  "max": 6,
+                  "min": 6
+                },
+                "name": "employeeID",
+                "nullable": false,
+                "type": "string"
+              },
+              {
+                "description": "Name or title",
+                "examples": [
+                  "John",
+                  "Maria",
+                  "Robert"
+                ],
+                "length": {
+                  "avg": 5.45,
+                  "max": 11,
+                  "min": 4
+                },
+                "name": "givenName",
+                "nullable": false,
+                "type": "string"
+              },
+              {
+                "description": "Time value",
+                "examples": [
+                  "2025-01-15T09:30:00Z",
+                  "2025-01-15T08:45:00Z",
+                  "2025-01-15T07:15:00Z"
+                ],
+                "name": "lastLogonTimestamp",
+                "nullable": false,
+                "type": "date"
+              },
+              {
+                "description": "Mail (email)",
+                "examples": [
+                  "john.smith@company.com",
+                  "maria.johnson@company.com",
+                  "robert.brown@company.com"
+                ],
+                "name": "mail",
+                "nullable": false,
+                "type": "email"
+              },
+              {
+                "description": "Age in years",
+                "examples": [
+                  "mwilson",
+                  "rbrown",
+                  "jdavis"
+                ],
+                "length": {
+                  "avg": 7.066666666666666,
+                  "max": 9,
+                  "min": 6
+                },
+                "name": "manager",
+                "nullable": true,
+                "type": "string"
+              },
+              {
+                "description": "Name or title",
+                "examples": [
+                  "Building A - Floor 3",
+                  "Building B - Floor 2",
+                  "Building A - Floor 4"
+                ],
+                "length": {
+                  "avg": 20,
+                  "max": 20,
+                  "min": 20
+                },
+                "name": "physicalDeliveryOfficeName",
+                "nullable": false,
+                "type": "string"
+              },
+              {
+                "description": "Name or title",
+                "examples": [
+                  "jsmith",
+                  "mjohnson",
+                  "rbrown"
+                ],
+                "length": {
+                  "avg": 6.95,
+                  "max": 9,
+                  "min": 4
+                },
+                "name": "sAMAccountName",
+                "nullable": false,
+                "type": "string"
+              },
+              {
+                "description": "Name or title",
+                "examples": [
+                  "Smith",
+                  "Johnson",
+                  "Brown"
+                ],
+                "length": {
+                  "avg": 5.95,
+                  "max": 8,
+                  "min": 3
+                },
+                "name": "surname",
+                "nullable": false,
+                "type": "string"
+              },
+              {
+                "description": "Phone number",
+                "examples": [
+                  "555-0101",
+                  "555-0102",
+                  "555-0103"
+                ],
+                "length": {
+                  "avg": 8,
+                  "max": 8,
+                  "min": 8
+                },
+                "name": "telephoneNumber",
+                "nullable": false,
+                "type": "string"
+              },
+              {
+                "description": "Title (string)",
+                "examples": [
+                  "Senior Software Engineer",
+                  "Marketing Manager",
+                  "Director of Sales"
+                ],
+                "length": {
+                  "avg": 18.2,
+                  "max": 28,
+                  "min": 9
+                },
+                "name": "title",
+                "nullable": false,
+                "type": "string"
+              },
+              {
+                "description": "Count or quantity",
+                "examples": [
+                  "512",
+                  "514"
+                ],
+                "name": "userAccountControl",
+                "nullable": false,
+                "range": {
+                  "max": 514,
+                  "mean": 512.1,
+                  "min": 512
+                },
+                "type": "number"
+              },
+              {
+                "description": "Creation timestamp",
+                "examples": [
+                  "2023-03-15T10:00:00Z",
+                  "2023-02-20T14:30:00Z",
+                  "2022-11-10T09:00:00Z"
+                ],
+                "name": "whenCreated",
+                "nullable": false,
+                "type": "date"
+              }
+            ]
+          }
+        },
+        "width": 220,
+        "height": 204,
+        "selected": false,
+        "positionAbsolute": {
+          "x": 198.32353663043864,
+          "y": 245.24804335395277
+        },
+        "dragging": false
+      },
+      {
+        "id": "transform_1754581621979",
+        "type": "transform",
+        "position": {
+          "x": 617.9601317611117,
+          "y": 248.85877639240385
+        },
+        "data": {
+          "label": "Transform Node",
+          "config": {
+            "transform_id": 1,
+            "transform_name": "CSV to OAA",
+            "transform_type": "ETL Transform",
+            "parameter_mappings": {
+              "csvData": {
+                "type": "direct",
+                "sources": [
+                  "department",
+                  "displayName",
+                  "distinguishedName",
+                  "employeeID",
+                  "givenName",
+                  "lastLogonTimestamp",
+                  "mail",
+                  "manager",
+                  "physicalDeliveryOfficeName",
+                  "sAMAccountName",
+                  "surname",
+                  "telephoneNumber",
+                  "userAccountControl",
+                  "title",
+                  "whenCreated"
+                ]
+              }
+            }
+          }
+        },
+        "width": 220,
+        "height": 249,
+        "selected": false,
+        "positionAbsolute": {
+          "x": 617.9601317611117,
+          "y": 248.85877639240385
+        },
+        "dragging": false
+      },
+      {
+        "id": "api_1754581646194",
+        "type": "api",
+        "position": {
+          "x": 1039.7567557006012,
+          "y": 254.22052203358027
+        },
+        "data": {
+          "label": "API Node",
+          "config": {
+            "api_connection_id": "veza-64c9a8d8",
+            "api_name": "Veza - NGamb - Lab",
+            "api_type": "veza",
+            "endpoint": "/api/v1/providers/custom/{id}/datasources",
+            "method": "POST",
+            "parameters": {
+              "id": {
+                "mappingType": "static",
+                "source": "",
+                "value": "12345"
+              }
+            },
+            "input_schema": [],
+            "attribute_mappings": {},
+            "body_mappings": {
+              "name": {
+                "type": "direct",
+                "source": "displayName"
+              }
+            },
+            "body_parameters": []
+          }
+        },
+        "width": 360,
+        "height": 261,
+        "selected": true,
+        "positionAbsolute": {
+          "x": 1039.7567557006012,
+          "y": 254.22052203358027
+        },
+        "dragging": false
+      }
+    ],
+    "edges": [
+      {
+        "type": "animated",
+        "animated": true,
+        "source": "file_1754581617805",
+        "sourceHandle": "data_output",
+        "target": "transform_1754581621979",
+        "targetHandle": "data_input",
+        "data": {
+          "sourceHandle": "data_output",
+          "targetHandle": "data_input"
+        },
+        "id": "reactflow__edge-file_1754581617805data_output-transform_1754581621979data_input"
+      },
+      {
+        "type": "animated",
+        "animated": true,
+        "source": "transform_1754581621979",
+        "sourceHandle": "data_output",
+        "target": "api_1754581646194",
+        "targetHandle": "data_input",
+        "data": {
+          "sourceHandle": "data_output",
+          "targetHandle": "data_input"
+        },
+        "id": "reactflow__edge-transform_1754581621979data_output-api_1754581646194data_input"
+      }
+    ]
+  },
+  "exported_at": "2025-08-07T15:50:50.397Z",
+  "mgflow_id": 1
+}

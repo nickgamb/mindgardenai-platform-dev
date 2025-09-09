@@ -1,0 +1,29 @@
+Flask                 # Core Flask framework
+Flask-Cors            # For handling CORS
+Flask-RESTful         # For building REST APIs
+Flask-Session         # For Session handling
+Flask-SocketIO        # For WebSockets in Flask
+python-socketio       # For WebSocket client connections to universal agents
+gunicorn              # WSGI server for running Flask in production
+pymongo               # MongoDB driver for Python, if you're using MongoDB
+authlib               # For Auth0 integration
+eventlet              # For async support with Flask-SocketIO
+requests              # For making HTTP requests
+numpy                 # For numerical operations
+pandas                # For CSV/data processing
+pyyaml                # For YAML/OpenAPI spec parsing
+asyncio               # For async operations
+jwcrypto              # For Auth0/JWT
+PyJWT                 # For Auth0/JWT
+python-dotenv         # Environment .env file support
+Redis                 # Redis client support
+apispec               # For OpenAPI Spec support
+apispec-webframeworks # For OpenAPI Spec support
+marshmallow           # For OpenAPI Spec support
+APScheduler           # For scheduling flow executions
+pandas                # For data analysis and schema detection
+requests>=2.25        # For OAA client SDK dependency
+# OAA SDK - using local copy in server/lib/oaaclient/
+neo4j                 # Official Neo4j Python Driver
+okta                  # Okta Python SDK
+psycopg2-binary       # PostgreSQL driver

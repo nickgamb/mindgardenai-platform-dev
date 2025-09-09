@@ -1,0 +1,63 @@
+# MindGarden Universal Agent - Git Ignore
+
+# Environment and configuration
+.env
+*.env
+!config.env.template
+
+# Data and logs
+data/
+*.log
+logs/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+.pytest_cache/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Docker
+.dockerignore
+
+# Device-specific files
+*.pid
+*.lock
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.bak
+*.backup
+
+# Local development
+dev/
+test_data/
+*.test
+
+# SSL certificates
+*.pem
+*.key
+*.crt
+*.cert
+
+# Runtime
+*.pid

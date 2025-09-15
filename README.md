@@ -304,6 +304,11 @@ Areas to help:
 - `ai-core/docs/README-Docker-Compose.md`
 - `ai-core/docs/AUTH0_INTEGRATION.md`
 
+## Attribution & Third-Party Licenses
+
+- AI-Core builds on a modified Open WebUI (AGPL-3.0). We retain attribution and license terms and publish our modifications in this repository.
+- See `THIRD_PARTY_NOTICES.md` for attribution and guidance on generating complete third‑party dependency reports for both the web-client (Node) and server/ai-core (Python).
+
 ## License
 
 Licensed under the GNU Affero General Public License v3.0 (AGPL-3.0). See `LICENSE`.

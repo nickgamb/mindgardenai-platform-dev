@@ -240,7 +240,7 @@ Universal Agent (NeuroTech)
 
 ## 4) Contributing
 
-This project is in active development. Some features are rough or incomplete, others are production-ready. Join us! We would be honored to have you join the project. We welcome issues, discussions, and PRs. 
+This project is in active development. Some features are rough or incomplete, others are production-ready. Join us! We would be honored to have you join the project. We welcome issues, discussions, and PRs. If you are interested in helping maintain the project, send us a note to admin@mindgardenai.com. <3
 
 Guidelines:
 - Fork and create feature branches; submit PRs against `main`.

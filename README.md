@@ -12,6 +12,11 @@ MindGarden is a enterprise grade data orchestration and integration platform wit
 ![AI Node](screenshots/ai_node.png)
 ![Flow Trigger](screenshots/Flow_Trigger.png)
 
+Video demos:
+- Full demo playlist on YouTube: https://www.youtube.com/watch?v=I3D04tZoY8M&list=PL4_dIhrpA1sWEqWbEslzOaFt7mVSp4o3M
+
+[![MindGarden Demo Playlist](https://img.youtube.com/vi/I3D04tZoY8M/0.jpg)](https://www.youtube.com/watch?v=I3D04tZoY8M&list=PL4_dIhrpA1sWEqWbEslzOaFt7mVSp4o3M)
+
 ## Quickstart (local)
 
 1) Prerequisites

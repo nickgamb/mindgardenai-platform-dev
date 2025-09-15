@@ -172,17 +172,6 @@ veza_*.json
 # Redis
 dump.rdb
 
-# Screenshots & Media
-screenshots/
-*.png
-*.jpg
-*.jpeg
-*.gif
-*.svg
-!public/assets/
-!web-client/public/
-!static/
-
 # Backup Files
 *.bak
 *.backup

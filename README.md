@@ -1,4 +1,4 @@
-# MindGarden Platform (Open Source)
+# MindGarden Platform
 
 MindGarden is a enterprise grade data orchestration and integration platform with a visual web client, an API server, and optional AI-core services. It lets you build flows connecting files, transforms, APIs, analytics, and storage, with Auth0-secured access and optional graph/DB backends. All core services are orchestrated with Docker Compose. On top of the core platform, domain-specific “Workloads” can be enabled via feature flags — the first workload suported is NeuroTech (EEG devices + experiments).
 

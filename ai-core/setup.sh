@@ -1,11 +1,11 @@
 #!/bin/bash
 
-# Alden Platform Complete Setup Script
-# This script sets up Redis, Ollama, and alden-core using Docker Compose
+# AI Platform Complete Setup Script
+# This script sets up Redis, Ollama, and AI-core using Docker Compose
 
 set -e
 
-echo "🚀 Setting up Alden Platform with Docker Compose..."
+echo "🚀 Setting up AI Platform with Docker Compose..."
 
 # Check if Docker is running
 if ! docker info > /dev/null 2>&1; then
@@ -46,8 +46,8 @@ EOF
 fi
 
 # Create Docker network
-echo "🌐 Creating Docker network 'alden'..."
-docker network create alden 2>/dev/null || echo "Network 'alden' already exists"
+echo "🌐 Creating Docker network 'AI'..."
+docker network create AI 2>/dev/null || echo "Network 'AI' already exists"
 
 # Create data directory
 echo "📁 Creating data directory..."
@@ -87,19 +87,19 @@ else
     echo "❌ Ollama connection failed"
 fi
 
-# Test alden-core connection
-echo "🧪 Testing alden-core connection..."
+# Test AI-core connection
+echo "🧪 Testing AI-core connection..."
 if curl -s http://localhost:8080/health > /dev/null; then
-    echo "✅ alden-core is running"
+    echo "✅ AI-core is running"
 else
-    echo "❌ alden-core connection failed"
+    echo "❌ AI-core connection failed"
 fi
 
 echo ""
 echo "🎉 Setup complete!"
 echo ""
 echo "📊 Service URLs:"
-echo "   - alden-core: http://localhost:8080"
+echo "   - AI-core: http://localhost:8080"
 echo "   - Ollama API: http://localhost:11434"
 echo "   - Redis: localhost:6379"
 echo ""
@@ -112,4 +112,4 @@ echo ""
 echo "🔧 Management commands:"
 echo "   - Redis CLI: docker exec -it redis redis-cli"
 echo "   - Ollama logs: docker logs -f ollama"
-echo "   - alden-core logs: docker logs -f alden-core" 
+echo "   - AI-core logs: docker logs -f AI-core" 

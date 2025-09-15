@@ -1,6 +1,6 @@
 # MindGarden Platform
 
-MindGarden is a enterprise grade data orchestration and integration platform with a visual web client, an API server, and optional AI-core services. It lets you build flows connecting files, transforms, APIs, analytics, and storage, with Auth0-secured access and optional graph/DB backends. All core services are orchestrated with Docker Compose. On top of the core platform, domain-specific “Workloads” can be enabled via feature flags — the first workload suported is NeuroTech (EEG devices + experiments).
+MindGarden is an enterprise-grade data orchestration and integration platform with a visual web client, an API server, and optional AI-core services. It lets you build flows connecting files, transforms, APIs, analytics, and storage, with Auth0-secured access and optional graph/DB backends. All core services are orchestrated with Docker Compose. On top of the core platform, domain-specific “Workloads” can be enabled via feature flags — the first workload supported is NeuroTech (EEG devices + experiments).
 
 ## Screenshots
 
@@ -64,6 +64,48 @@ cd mindgardenai-platform-dev
 - Datastores:
   - NEO4J_AUTH=neo4j/password
   - PG_USER=mguser, PG_PASSWORD=mgpass, PG_DB=mgdb
+
+Copy-paste `.env` template (edit placeholders):
+
+```bash
+# --- Web-Client (Next.js) ---
+NEXT_PUBLIC_API_SERVER_URL=http://localhost:5000
+NEXT_PUBLIC_AUTH0_DOMAIN=your-tenant.auth0.com
+NEXT_PUBLIC_AUTH0_CLIENT_ID=YOUR_APP_CLIENT_ID
+NEXT_PUBLIC_AUTH0_API_IDENTIFIER=https://mindgarden.local/api
+NEXT_PUBLIC_AUTH0_CALLBACK_URL=http://localhost:3000/callback
+NEXT_PUBLIC_ENABLE_RBAC=false
+NEXT_PUBLIC_SUPER_ADMIN_ROLES=mindgardenai-admin
+NEXT_PUBLIC_COOKIE_DOMAIN=
+
+# --- Server (Flask) ---
+FLASK_SECRET_KEY=change-me
+CLIENT_ORIGIN=http://localhost:3000
+MODE=dev
+AUTH0_DOMAIN=your-tenant.auth0.com
+AUTH0_CLIENT_ID=YOUR_APP_CLIENT_ID
+AUTH0_CLIENT_SECRET=YOUR_APP_CLIENT_SECRET
+AUTH0_REDIRECT_URI=http://localhost:3000/callback
+AUTH0_API_IDENTIFIER=https://mindgarden.local/api
+AUTH0_MGMT_CLIENT_ID=YOUR_M2M_CLIENT_ID
+AUTH0_MGMT_CLIENT_SECRET=YOUR_M2M_CLIENT_SECRET
+ENABLE_RBAC=false
+FLASK_SESSION_TYPE=redis
+FLASK_SESSION_REDIS_URL=redis://redis:6379/0
+
+# --- Datastores ---
+NEO4J_AUTH=neo4j/password
+PG_USER=mguser
+PG_PASSWORD=mgpass
+PG_DB=mgdb
+NEO4J_URI=bolt://neo4j:7687
+NEO4J_USER=neo4j
+NEO4J_PASSWORD=password
+
+# --- Misc ---
+VERSION=0.0.1
+API_BASE_URL=http://localhost:5000
+```
 
 5) Configure Auth0 (one-time)
 - Create a Regular Web Application
